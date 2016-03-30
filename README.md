@@ -9,7 +9,7 @@ Warning: I have barely tested this and it probably still has a couple of bugs!
 ## Example
 I use this for automatically redirecting imgur .gif addresses to the corresponding .gifv address:
 
-`(^https?:\/\/i\.imgur\.com\/[^.]*?\.gif)($|[^v].*?$)` -> `<<1>>v<<2>>`
+`(^https?:\/\/i\.imgur\.com\/[^.]*?\.gif)($|[^v].*?$)` --> `<<1>>v<<2>>`
 
 This matches any imgur '.gif' url and adds a 'v' after the '.gif'.
 
