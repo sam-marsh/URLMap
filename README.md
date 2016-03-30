@@ -9,3 +9,7 @@ Warning: I have barely tested this and it probably still has a couple of bugs!
 I use this for automatically redirecting imgur .gif addresses to the corresponding .gifv address:
 
 //TODO
+
+## Download
+
+[Here](https://github.com/sam-marsh/URLMap/raw/master/URLMap.safariextz).
