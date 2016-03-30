@@ -1,8 +1,6 @@
 # URLMap
 
-<p align="center">
-  <img width="10%" src="https://raw.githubusercontent.com/sam-marsh/URLMap/master/URLMap.safariextension/Icon.png" />
-</p>
+<img width="10%" src="https://raw.githubusercontent.com/sam-marsh/URLMap/master/URLMap.safariextension/Icon.png" />
 
 A safari extension for redirecting addresses using regex matching and replacement.
 
