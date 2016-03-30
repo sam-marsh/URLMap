@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Global</title></head>
+<body>
+    <script type="text/javascript">
+
+        function updateSettings(event) {
+            if (event.name == 'updateSettings') {
+                console.log(event.message);
+                safari.extension.settings.redirects = event.message;
+            } else if (event.name == 'requestSettings') {
+                console.log("got");
+                var redirects = [];
+                if ("redirects" in safari.extension.settings) {
+                    redirects = safari.extension.settings.redirects;
+                }
+                event.target.page.dispatchMessage("getSettings", redirects);
+            }
+        };
+
+        function openSettings(event) {
+            if (event.key == "checkbox") {
+                var newTab = safari.application.activeBrowserWindow.openTab();
+                newTab.url = safari.extension.baseURI + 'settings.html';
+            }
+        };
+
+        safari.application.addEventListener("message", updateSettings, false);
+        safari.extension.settings.addEventListener("change", openSettings, false);
+
+    </script>
+</body>

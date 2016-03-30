@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>URLMap</title>
+    <style type="text/css">
+        body {
+            margin:40px auto;
+            max-width:650px;
+            line-height:1.6;
+            font-size:18px;
+            color:#444;
+            padding:010px;
+        }
+        h1, h2, h3 {
+            line-height:1.2;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" src="jquery.js"></script>
+
+    <h1>Settings</h1>
+
+    <table style="width:100%;">
+        <tr>
+            <td><button id="add-redirect">Add another redirect</button></td>
+        </tr>
+        <tr>
+            <td><button id="save">Save</button></td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            function getSettings(event) {
+                console.log("received " + event.message);
+                if (event.name == "getSettings") {
+                    var redirects = event.message;
+
+                    for (var i = 0; i < redirects.length; ++i) {
+                        var row = $("<tr class=\"redirect\"></tr>");
+                        var el1 = $("<td><input class=\"q\" type=\"text\" placeholder=\"regex for matching url\"></td>");
+                        var el2 = $("<td>will be  replaced by</td>")
+                        var el3 = $("<td><input class=\"a\" type=\"text\" placeholder=\"replacement url\"></td>");
+                        var el4 = $("<td><button>Delete</button></td>")
+
+                        el1.find(".q").val(redirects[i][0]);
+                        el3.find(".a").val(redirects[i][1]);
+
+                        $("#add-redirect").parent().parent().before(row);
+
+                        row.append(el1).append(el2).append(el3).append(el4);
+
+                        el4.click(function() {
+                            row.remove();
+                        });
+                    }
+                }
+            };
+
+            $("#add-redirect").click(function() {
+                var row = $("<tr class=\"redirect\"></tr>");
+                var el1 = $("<td><input class=\"q\" type=\"text\" placeholder=\"regex for matching url\"></td>");
+                var el2 = $("<td>will be  replaced by</td>")
+                var el3 = $("<td><input class=\"a\" type=\"text\" placeholder=\"replacement url\"></td>");
+                var el4 = $("<td><button>Delete</button></td>")
+
+                $(this).parent().parent().before(row);
+
+                row.append(el1).append(el2).append(el3).append(el4);
+
+                el4.click(function() {
+                    row.remove();
+                });
+            });
+
+            $("#save").click(function() {
+
+                var redirects = [];
+
+                $(".redirect").each(function(index, el) {
+                    var q = $(this).find(".q").val();
+                    var a = $(this).find(".a").val();
+
+                    redirects.push([q, a]);
+                });
+
+                safari.self.tab.dispatchMessage("updateSettings", redirects);
+            });
+
+            safari.self.addEventListener("message", getSettings, false);
+            safari.self.tab.dispatchMessage("requestSettings", null);
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
